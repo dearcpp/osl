@@ -1,4 +1,3 @@
-dist: OSL
 language: cpp
 
 addons:
