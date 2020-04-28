@@ -80,6 +80,7 @@ namespace osl
             _pointer = new type[size];
             memory_copy(_pointer, _old_ptr, _old_size);
             _allocated = size;
+            delete _old_ptr;
         }
 
         void free() {
