@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace osl
 {
@@ -9,50 +9,56 @@ namespace osl
     {
     public:
 
+        using element_type = type;
+
         template <class... types>
-        explicit safe_ptr(types&&... args) noexcept {
+        explicit safe_ptr(types&&... args) {
             _ptr = new type(args...);
         }
 
-        safe_ptr(safe_ptr &object) noexcept {
+        safe_ptr(safe_ptr &object) {
             _ptr = object.release();
         }
 
-        ~safe_ptr() noexcept {
+        ~safe_ptr() {
             delete _ptr;
         }
 
-        type *operator->() const noexcept {
+        type *operator->() const {
             return _ptr;
         }
 
-        type *operator*() const noexcept {
+        type *operator*() const {
             return _ptr;
         }
 
-        safe_ptr &operator=(safe_ptr& object) noexcept {
+        safe_ptr &operator=(safe_ptr& object) {
             _ptr = object.release();
             return *this;
         }
 
-        type *get() const noexcept {
+        type *get() const {
             return _ptr;
         }
 
-        type *release() noexcept {
-            type* buffer = _ptr;
-            _ptr = nullptr;
+        type *release() {
+            type *buffer = _ptr;
+            _ptr = 0;
             return buffer;
         }
 
     private:
+
         type *_ptr;
+
     };
 
     template <class type>
     class allocator
     {
     public:
+
+        using element_type = type;
 
         explicit allocator() : _allocated(0) { }
 
