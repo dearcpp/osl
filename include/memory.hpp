@@ -1,9 +1,16 @@
 #pragma once
 
-#include <cstddef>
+#include <cstdlib>
 
 namespace osl
 {
+    template <class type>
+    void *memory_copy(type *destination, const type *source, size_t length) {
+        while (length--)
+            *destination++ = *source++;
+        return destination;
+    }
+
     template <class type>
     class safe_ptr
     {
@@ -32,7 +39,7 @@ namespace osl
             return _ptr;
         }
 
-        safe_ptr &operator=(safe_ptr& object) {
+        safe_ptr &operator=(safe_ptr &object) {
             _ptr = object.release();
             return *this;
         }
@@ -81,12 +88,11 @@ namespace osl
         }
 
         void reallocate(size_t size) {
-            size_t _old_size = _allocated;
-            type *_old_ptr = _pointer;
+            type *old_ptr = _pointer;
             _pointer = new type[size];
-            memory_copy(_pointer, _old_ptr, _old_size);
+            memory_copy(_pointer, old_ptr, _allocated);
             _allocated = size;
-            delete _old_ptr;
+            delete old_ptr;
         }
 
         void free() {
