@@ -21,5 +21,7 @@ file(GLOB_RECURSE OSL_SRC_FILES
 
 add_library(${PROJECT_NAME} STATIC ${OSL_SRC_FILES})
 
-add_subdirectory("${OSL_EXAMPLE_DIR}/memory/")
 add_subdirectory("${OSL_EXAMPLE_DIR}/allocator/")
+add_subdirectory("${OSL_EXAMPLE_DIR}/array/")
+add_subdirectory("${OSL_EXAMPLE_DIR}/memory/")
+add_subdirectory("${OSL_EXAMPLE_DIR}/stack/")
