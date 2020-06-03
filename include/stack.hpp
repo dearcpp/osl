@@ -1,30 +1,30 @@
 #pragma once
 
-#include <cstddef>
+#include <stddef.h>
 
 namespace osl
 {
-    template <class type>
+    template <class _type>
     class stack
     {
 
         struct node
         {
-            type value;
+            _type value;
             node *next;
 
-            node(type value) : value(value) { }
+            node(_type value) : value(value) { }
         };
 
         node *head;
 
     public:
 
-        using element_type = type;
+        using element_type = _type;
 
         explicit stack() : head(0) { }
 
-        void push(const type &value) {
+        void push(const _type &value) {
             node *next = new node(value);
             next->next = head;
             head = next;
@@ -36,7 +36,7 @@ namespace osl
             head = buf;
         }
 
-        type top() const {
+        _type top() const {
             return head->value;
         }
 

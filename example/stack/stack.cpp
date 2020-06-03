@@ -1,9 +1,12 @@
-#include <stack.hpp>
 #include <cstdio>
+
+#include <stack.hpp>
 
 int main() {
     osl::stack<int> stack_list;
-    stack_list.push(2);
-    printf("value: %i\n", stack_list.top());
+    for (size_t i = 0; i < 10; i++) {
+        stack_list.push(i);
+    }
+    printf("%i\n", stack_list.top());
     return 0;
 }
