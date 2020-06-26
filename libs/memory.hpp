@@ -19,7 +19,7 @@ namespace osl
         using element_type = _type;
 
         template <class... _types>
-        explicit safe_ptr(_types&&... args) {
+        safe_ptr(_types&&... args) {
             _ptr = new _type(args...);
         }
 
@@ -27,7 +27,7 @@ namespace osl
             _ptr = object.release();
         }
 
-        ~safe_ptr() {
+        virtual ~safe_ptr() {
             delete _ptr;
         }
 
