@@ -1,12 +1,13 @@
 #pragma once
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace osl
 {
     template <class _type>
-    class stack
+    class queue
     {
+    private:
 
         struct node
         {
@@ -16,37 +17,41 @@ namespace osl
             node(_type value) : value(value) { }
         };
 
-        node *head;
+        node *_head;
 
     public:
 
         using element_type = _type;
 
-        explicit stack() : head(0) { }
+        queue() : _head(0) { }
+
+        virtual ~queue() {
+            clear();
+        }
 
         void push(const _type &value) {
             node *next = new node(value);
-            next->next = head;
-            head = next;
+            next->next = _head;
+            _head = next;
         }
 
         void pop() {
-            node *buf = head->next;
-            delete head;
-            head = buf;
+            node *buf = _head->next;
+            delete _head;
+            _head = buf;
         }
 
         _type top() const {
-            return head->value;
+            return _head->value;
         }
 
         bool empty() const {
-            return head == 0;
+            return _head == 0;
         }
 
         size_t size() const {
             size_t counter = 0;
-            node *curr = head;
+            node *curr = _head;
             while (curr) {
                 counter++;
                 curr = curr->next;
@@ -55,10 +60,10 @@ namespace osl
         }
 
         void clear() {
-            while (head) {
-                node *buf = head->next;
-                delete head;
-                head = buf;
+            while (_head) {
+                node *buf = _head->next;
+                delete _head;
+                _head = buf;
             }
         }
 

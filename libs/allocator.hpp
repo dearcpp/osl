@@ -11,13 +11,13 @@ namespace osl
 
         using element_type = _type;
 
-        explicit allocator() : _allocated(0) { }
+        allocator() :  _pointer(0), _allocated(0) { }
 
         allocator(size_t size) {
             allocate(size);
         }
 
-        ~allocator() {
+        virtual ~allocator() {
             delete _pointer;
         }
 
@@ -34,13 +34,16 @@ namespace osl
         void reallocate(size_t size) {
             _type *old_ptr = _pointer;
             _pointer = new _type[size];
-            memory_copy(_pointer, old_ptr, _allocated);
+            if (old_ptr) {
+                memory_copy(_pointer, old_ptr, _allocated);
+                delete old_ptr;
+            }
             _allocated = size;
-            delete old_ptr;
         }
 
         void free() {
             delete _pointer;
+            _pointer = 0;
             _allocated = 0;
         }
 
@@ -52,7 +55,7 @@ namespace osl
             return _pointer[index];
         }
 
-    private:
+    protected:
 
         _type *_pointer;
         size_t _allocated;
