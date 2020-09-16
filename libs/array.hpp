@@ -1,31 +1,35 @@
-#pragma once
+#include <inttypes.hpp>
+#include <defines.hpp>
 
-#include <stddef.h>
+#ifndef _OSL_ARRAY_HPP
+#define _OSL_ARRAY_HPP
 
 namespace osl
 {
-    template <class _type, size_t _size>
+    template <class _type, u64 _size>
     class array
     {
     public:
 
-        using element_type = _type;
+        using type = _type;
 
-        _type operator[](size_t index) const {
+        type operator[](u64 index) const {
             return _storage[index];
         }
 
-        _type &operator[](size_t index) {
+        type &operator[](u64 index) {
             return _storage[index];
         }
 
-        constexpr size_t size() const {
+        _OSL_NODISCARD _OSL_CONSTEXPR u64 size() const {
             return _size;
         }
+    
+    protected:
 
-    private:
-
-        _type _storage[_size];
+        type _storage[_size];
 
     };
 }
+
+#endif

@@ -1,14 +1,28 @@
-#pragma once
+#include <inttypes.hpp>
+#include <defines.hpp>
 
-#include <stddef.h>
+#ifndef _OSL_MEMORY_HPP
+#define _OSL_MEMORY_HPP
 
 namespace osl
 {
     template <class _type>
-    void *memory_copy(_type *destination, const _type *source, size_t length) {
+    void memory_copy(_type *destination, _type const *source, u64 length) {
         while (length--)
             *destination++ = *source++;
-        return destination;
+    }
+
+    template <class _type>
+    void memory_set(_type *destination, _type value, u64 length) {
+        while (length--)
+            *destination++ = value;
+    }
+
+    template <class _type>
+    u64 string_length(_type *source) {
+        u64 result = 0;
+        while (*source++) result++;
+        return result;
     }
 
     template <class _type>
@@ -16,47 +30,49 @@ namespace osl
     {
     public:
 
-        using element_type = _type;
+        using type = _type;
 
         template <class... _types>
         safe_ptr(_types&&... args) {
-            _ptr = new _type(args...);
+            _pointer = new _type(args...);
         }
 
         safe_ptr(safe_ptr &object) {
-            _ptr = object.release();
+            _pointer = object.release();
         }
 
         virtual ~safe_ptr() {
-            delete _ptr;
+            delete _pointer;
         }
 
-        _type *operator->() const {
-            return _ptr;
+        type *operator->() const {
+            return _pointer;
         }
 
-        _type *operator*() const {
-            return _ptr;
+        type *operator*() const {
+            return _pointer;
         }
 
         safe_ptr &operator=(safe_ptr &object) {
-            _ptr = object.release();
+            _pointer = object.release();
             return *this;
         }
 
-        _type *get() const {
-            return _ptr;
+        _OSL_NODISCARD type *get() const {
+            return _pointer;
         }
 
-        _type *release() {
-            _type *buffer = _ptr;
-            _ptr = 0;
+        _OSL_NODISCARD type *release() {
+            type *buffer = _pointer;
+            _pointer = 0;
             return buffer;
         }
 
-    private:
+    protected:
 
-        _type *_ptr;
+        type *_pointer;
 
     };
 }
+
+#endif
