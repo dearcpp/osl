@@ -1,13 +1,15 @@
-#pragma once
+#include <inttypes.hpp>
+#include <defines.hpp>
 
-#include <cstddef>
+#ifndef _OSL_QUEUE_HPP
+#define _OSL_QUEUE_HPP
 
 namespace osl
 {
     template <class _type>
     class queue
     {
-    private:
+    protected:
 
         struct node
         {
@@ -17,19 +19,17 @@ namespace osl
             node(_type value) : value(value) { }
         };
 
-        node *_head;
-
     public:
 
-        using element_type = _type;
+        using type = _type;
 
-        queue() : _head(0) { }
+        _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0) { }
 
         virtual ~queue() {
             clear();
         }
 
-        void push(const _type &value) {
+        void push(type const &value) {
             node *next = new node(value);
             next->next = _head;
             _head = next;
@@ -67,5 +67,11 @@ namespace osl
             }
         }
 
+    protected:
+
+        node *_head;
+
     };
 }
+
+#endif
