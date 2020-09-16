@@ -57,6 +57,11 @@ namespace osl
             return *this;
         }
 
+        _OSL_NODISCARD basic_string &operator+(basic_string const &object) {
+            this->operator+=(object);
+            return *this;
+        }
+
         _OSL_NODISCARD type const *c_str() const _OSL_NOEXCEPT {
             return this->_pointer;
         }
