@@ -4,7 +4,7 @@
 
 int main() {
     osl::basic_string<char> str = "Hello";
-    str = "Hello World";
+    str = str + " World";
     printf("Allocated: %llu\nLength: %llu\nString: %s", str.allocated(), str.length(), str.data());
     return 0;
 }
