@@ -7,7 +7,7 @@
 namespace osl
 {
     template <class _type>
-    class basic_string : public osl::allocator<_type>
+    class basic_string : public allocator<_type>
     {
     public:
 
@@ -33,6 +33,17 @@ namespace osl
             this->_pointer[_length] = 0;
         }
 
+        basic_string &operator=(type const *pointer) {
+            _length = string_length(pointer);
+
+            if (this->_allocated < _length + 1)
+                this->reallocate(_length + 1);
+
+            memory_copy<type>(this->_pointer, pointer, _length);
+            this->_pointer[_length] = 0;
+            return *this;
+        }
+
         basic_string &operator=(basic_string const &object) {
             _length = object.length();
 
@@ -41,6 +52,25 @@ namespace osl
 
             memory_copy<type>(this->_pointer, object.c_str(), _length);
             this->_pointer[_length] = 0;
+            return *this;
+        }
+
+        basic_string &operator=(basic_string&& object) {
+            this->_pointer = object.c_str();
+            object.clear();
+            return *this;
+        }
+
+        basic_string &operator+=(type const *pointer) {
+            u64 length = string_length(pointer);
+            u64 new_length = _length + length;
+
+            if (this->_allocated < new_length + 1) {
+                this->reallocate(new_length + 1);
+            }
+
+            memory_copy<type>(this->_pointer + _length, pointer, length);
+            this->_pointer[_length = new_length] = 0;
             return *this;
         }
 
@@ -57,9 +87,19 @@ namespace osl
             return *this;
         }
 
+        _OSL_NODISCARD basic_string &operator+(type const *pointer) {
+            this->operator+=(pointer);
+            return *this;
+        }
+
         _OSL_NODISCARD basic_string &operator+(basic_string const &object) {
             this->operator+=(object);
             return *this;
+        }
+
+        void clear() {
+            _length = 0;
+            this->free();
         }
 
         _OSL_NODISCARD type const *c_str() const _OSL_NOEXCEPT {
