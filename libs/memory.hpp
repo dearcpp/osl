@@ -34,7 +34,7 @@ namespace osl
 
         template <class... _types>
         safe_ptr(_types&&... args) {
-            _pointer = new _type(args...);
+            _pointer = new type(args...);
         }
 
         safe_ptr(safe_ptr &object) {
