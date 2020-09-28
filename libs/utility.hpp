@@ -1,5 +1,5 @@
-#ifndef _OSL_UTILS_HPP
-#define _OSL_UTILS_HPP
+#ifndef _OSL_UTILITY_HPP
+#define _OSL_UTILITY_HPP
 
 namespace osl
 {
