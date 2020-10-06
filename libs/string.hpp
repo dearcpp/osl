@@ -97,6 +97,14 @@ namespace osl
             return *this;
         }
 
+        _OSL_NODISCARD bool operator==(type const *pointer) {
+            return string_compare(this->_pointer, (char*)pointer);
+        }
+
+        _OSL_NODISCARD bool operator==(basic_string const &object) {
+            return string_compare(this->_pointer, (char*)object.c_str());
+        }
+
         void clear() {
             _length = 0;
             this->free();
