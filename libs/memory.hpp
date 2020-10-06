@@ -26,6 +26,14 @@ namespace osl
     }
 
     template <class _type>
+    bool string_compare(_type *first, _type *second) {
+        do {
+            if (*first == 0 && *second == 0) return true;
+        } while (*first++ == *second++);
+        return false; 
+    }
+
+    template <class _type>
     class safe_ptr
     {
     public:
