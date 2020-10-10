@@ -40,8 +40,7 @@ namespace osl
                 this->reallocate(_length + 1);
 
             memory_copy<type>(this->_pointer, pointer, _length);
-            this->_pointer[_length] = 0;
-            return *this;
+            return this->_pointer[_length] = 0, *this;
         }
 
         basic_string &operator=(basic_string const &object) {
@@ -51,14 +50,12 @@ namespace osl
                 this->reallocate(_length + 1);
 
             memory_copy<type>(this->_pointer, object.c_str(), _length);
-            this->_pointer[_length] = 0;
-            return *this;
+            return this->_pointer[_length] = 0, *this;
         }
 
         basic_string &operator=(basic_string&& object) {
             this->_pointer = object.c_str();
-            object.clear();
-            return *this;
+            return object.clear(), *this;
         }
 
         basic_string &operator+=(type const *pointer) {
@@ -70,8 +67,7 @@ namespace osl
             }
 
             memory_copy<type>(this->_pointer + _length, pointer, length);
-            this->_pointer[_length = new_length] = 0;
-            return *this;
+            return this->_pointer[_length = new_length] = 0, *this;
         }
 
         basic_string &operator+=(basic_string const &object) {
@@ -83,18 +79,15 @@ namespace osl
             }
 
             memory_copy<type>(this->_pointer + _length, object.c_str(), length);
-            this->_pointer[_length = new_length] = 0;
-            return *this;
+            return this->_pointer[_length = new_length] = 0, *this;
         }
 
         _OSL_NODISCARD basic_string &operator+(type const *pointer) {
-            this->operator+=(pointer);
-            return *this;
+            return this->operator+=(pointer), *this;
         }
 
         _OSL_NODISCARD basic_string &operator+(basic_string const &object) {
-            this->operator+=(object);
-            return *this;
+            return this->operator+=(object), *this;
         }
 
         _OSL_NODISCARD bool operator==(type const *pointer) {

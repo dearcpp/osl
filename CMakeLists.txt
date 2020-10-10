@@ -13,12 +13,19 @@ file(GLOB_RECURSE OSL_SRC_FILES
     "${OSL_LIBS_DIR}/*.hpp"
 )
 
+if (MSVC)
+    add_compile_options(/W4 /WX)
+else ()
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif ()
+
 # Options
 option(OSL_BUILD_TESTS "Build the OSL test programs" TRUE)
 
 if (OSL_BUILD_TESTS)
  add_subdirectory("${OSL_EXAMPLE_DIR}/allocator/")
  add_subdirectory("${OSL_EXAMPLE_DIR}/array/")
+ add_subdirectory("${OSL_EXAMPLE_DIR}/list/")
  add_subdirectory("${OSL_EXAMPLE_DIR}/math/")
  add_subdirectory("${OSL_EXAMPLE_DIR}/memory/")
  add_subdirectory("${OSL_EXAMPLE_DIR}/queue/")
