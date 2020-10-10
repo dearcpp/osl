@@ -62,8 +62,7 @@ namespace osl
         }
 
         safe_ptr &operator=(safe_ptr &object) {
-            _pointer = object.release();
-            return *this;
+            return _pointer = object.release(), *this;
         }
 
         _OSL_NODISCARD type *get() const {
@@ -72,8 +71,7 @@ namespace osl
 
         _OSL_NODISCARD type *release() {
             type *buffer = _pointer;
-            _pointer = 0;
-            return buffer;
+            return _pointer = 0, buffer;
         }
 
     protected:

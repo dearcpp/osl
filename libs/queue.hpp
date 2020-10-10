@@ -32,13 +32,13 @@ namespace osl
         void push(type const &value) {
             node *next = new node(value);
             next->next = _head;
-            _head = next;
+            _head = next, _size++;
         }
 
         void pop() {
-            node *buf = _head->next;
+            node *buffer = _head->next;
             delete _head;
-            _head = buf;
+            _head = buffer, _size--;
         }
 
         _type top() const {
@@ -49,27 +49,22 @@ namespace osl
             return _head == 0;
         }
 
-        size_t size() const {
-            size_t counter = 0;
-            node *curr = _head;
-            while (curr) {
-                counter++;
-                curr = curr->next;
-            }
-            return counter;
+        u64 size() const {
+            return _size;
         }
 
         void clear() {
             while (_head) {
-                node *buf = _head->next;
+                node *buffer = _head->next;
                 delete _head;
-                _head = buf;
+                _head = buffer;
             }
         }
 
     protected:
 
         node *_head;
+        u64 _size;
 
     };
 }
