@@ -33,6 +33,13 @@ namespace osl
             this->_pointer[_length] = 0;
         }
 
+        basic_string &operator=(type const object) {
+            _length = 1;
+            this->allocate(2);
+            this->_pointer[0] = object;
+            this->_pointer[1] = 0;
+        }
+
         basic_string &operator=(type const *pointer) {
             _length = string_length(pointer);
 
@@ -56,6 +63,15 @@ namespace osl
         basic_string &operator=(basic_string&& object) {
             this->_pointer = object.c_str();
             return object.clear(), *this;
+        }
+
+        basic_string &operator+=(type const object) {
+            if (this->_allocated < _length + 2) {
+                this->reallocate(_length + 2);
+            }
+
+            memory_set<type>(this->_pointer + _length, object, 1);
+            return this->_pointer[++_length] = 0, *this;
         }
 
         basic_string &operator+=(type const *pointer) {
@@ -82,12 +98,21 @@ namespace osl
             return this->_pointer[_length = new_length] = 0, *this;
         }
 
+        _OSL_NODISCARD basic_string &operator+(type const object) {
+            return this->operator+=(object), *this;
+        }
+
         _OSL_NODISCARD basic_string &operator+(type const *pointer) {
             return this->operator+=(pointer), *this;
         }
 
         _OSL_NODISCARD basic_string &operator+(basic_string const &object) {
             return this->operator+=(object), *this;
+        }
+
+        _OSL_NODISCARD bool operator==(type const object) {
+            if (_length > 1 || _length == 0) return false;
+            return *this->_pointer == object;
         }
 
         _OSL_NODISCARD bool operator==(type const *pointer) {
