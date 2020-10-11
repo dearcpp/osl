@@ -25,7 +25,7 @@ namespace osl
             this->allocate(_length + 1);
             memory_copy<type>(this->_pointer, pointer, _length);
             this->_pointer[_length] = 0;
-        }s
+        }
 
         basic_string(basic_string const &object) : _length(object.length()) {
             this->allocate(_length + 1);
