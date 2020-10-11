@@ -27,7 +27,7 @@ namespace osl
             this->_pointer[_length] = 0;
         }
 
-        basic_string(basic_string const &object) : _length(object.length()), allocator<_type>(_length + 1) {
+        basic_string(basic_string const &object) : _length(object.length()), allocator<_type>(object.length() + 1) {
             memory_copy<type>(this->_pointer, object.c_str(), _length);
             this->_pointer[_length] = 0;
         }
