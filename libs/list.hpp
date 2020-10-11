@@ -40,7 +40,7 @@ namespace osl
             }
 
             bool operator!=(const_iterator const &object) _OSL_NOEXCEPT {
-                return !(_node == object._node);
+                return _node != object._node;
             }
 
             const_iterator operator--() _OSL_NOEXCEPT { 
