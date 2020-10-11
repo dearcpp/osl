@@ -13,7 +13,7 @@ namespace osl
 
         using type = _type;
 
-        _OSL_CONSTEXPR allocator() _OSL_NOEXCEPT : _pointer(0), _allocated(0) { };
+        explicit _OSL_CONSTEXPR allocator() _OSL_NOEXCEPT : _pointer(0), _allocated(0) { };
 
         allocator(u64 size) {
             allocate(size);
