@@ -13,12 +13,6 @@ file(GLOB_RECURSE OSL_SRC_FILES
     "${OSL_LIBS_DIR}/*.hpp"
 )
 
-if (MSVC)
-    add_compile_options(/W4 /WX)
-else ()
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
-endif ()
-
 # Options
 option(OSL_BUILD_TESTS "Build the OSL test programs" TRUE)
 
