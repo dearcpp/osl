@@ -122,6 +122,18 @@ namespace osl
         _OSL_NODISCARD bool operator==(basic_string const &object) {
             return string_compare(this->_pointer, (char*)object.c_str());
         }
+        
+        _OSL_NODISCARD bool operator!=(type const object) {
+            return !(this == object);
+        }
+
+        _OSL_NODISCARD bool operator!=(type const *pointer) {
+            return !(this == pointer);
+        }
+
+        _OSL_NODISCARD bool operator!=(basic_string const &object) {
+            return !(this == object);
+        }
 
         void clear() {
             _length = 0;
