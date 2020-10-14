@@ -13,7 +13,7 @@ namespace osl
 
         using type = _type;
 
-        _OSL_CONSTEXPR basic_string() _OSL_NOEXCEPT { }
+        basic_string() _OSL_NOEXCEPT { }
 
         basic_string(type const object) : _length(1) {
             this->allocate(2);
