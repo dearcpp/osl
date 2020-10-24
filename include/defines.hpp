@@ -1,6 +1,9 @@
 #ifndef _OSL_DEFINES_HPP
 #define _OSL_DEFINES_HPP
 
+#define OSL_BEGIN_NAMESPACE namespace osl {
+#define OSL_END_NAMESPACE }
+
 # if __cplusplus >= 201103L
 #  define _OSL_NOEXCEPT noexcept
 # else
