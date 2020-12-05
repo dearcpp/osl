@@ -1,9 +1,8 @@
 #ifndef _OSL_LIST_HPP
 #define _OSL_LIST_HPP
 
-#include <inttypes.hpp>
-#include <defines.hpp>
-#include <assert.hpp>
+# include <int_types.hpp>
+# include <assert.hpp>
 
 OSL_BEGIN_NAMESPACE
 
@@ -36,11 +35,11 @@ public:
             return _node->value;
         }
 
-        bool operator==(const_iterator const &object) _OSL_NOEXCEPT {
+        bool operator==(const const_iterator &object) _OSL_NOEXCEPT {
             return _node == object._node;
         }
 
-        bool operator!=(const_iterator const &object) _OSL_NOEXCEPT {
+        bool operator!=(const const_iterator &object) _OSL_NOEXCEPT {
             return _node != object._node;
         }
 
@@ -103,7 +102,7 @@ public:
 
     void pop_front() {
         if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use the 'realloc' method");
+            assert_failed(__FILE__, __LINE__, "failed to pop element from list");
 
         _front->next->prev = 0;
         node *buffer = _front;
@@ -140,7 +139,7 @@ public:
 
     void pop_back() {
         if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use the 'realloc' method");
+            assert_failed(__FILE__, __LINE__, "failed to pop element from list");
 
         _back->prev->next = 0;
         node *buffer = _back;

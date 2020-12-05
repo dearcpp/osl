@@ -1,13 +1,12 @@
 #ifndef _OSL_MEMORY_HPP
 #define _OSL_MEMORY_HPP
 
-#include <inttypes.hpp>
-#include <defines.hpp>
+# include <int_types.hpp>
 
 OSL_BEGIN_NAMESPACE
 
 template <class _type>
-void memory_copy(_type *destination, _type const *source, u64 length) {
+void memory_copy(_type *destination, const _type *source, u64 length) {
     while (length--)
         *destination++ = *source++;
 }

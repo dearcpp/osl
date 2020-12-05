@@ -1,8 +1,8 @@
 #ifndef _OSL_STRING_HPP
 #define _OSL_STRING_HPP
 
-#include <memory.hpp>
-#include <allocator.hpp>
+# include <memory.hpp>
+# include <allocator.hpp>
 
 OSL_BEGIN_NAMESPACE
 
@@ -19,32 +19,32 @@ public:
         clear();
     }
 
-    basic_string(type const object) : _length(1) {
+    basic_string(const type object) : _length(1) {
         this->allocate(2);
         this->_pointer[0] = object;
         this->_pointer[1] = 0;
     }
 
-    basic_string(type const *pointer) : _length(string_length(pointer)) {
+    basic_string(const type *pointer) : _length(string_length(pointer)) {
         this->allocate(_length + 1);
         memory_copy<type>(this->_pointer, pointer, _length);
         this->_pointer[_length] = 0;
     }
 
-    basic_string(basic_string const &object) : _length(object.length()) {
+    basic_string(const basic_string &object) : _length(object.length()) {
         this->allocate(_length + 1);
         memory_copy<type>(this->_pointer, object.c_str(), _length);
         this->_pointer[_length] = 0;
     }
 
-    basic_string &operator=(type const object) {
+    basic_string &operator=(const type object) {
         _length = 1;
         this->allocate(2);
         this->_pointer[0] = object;
         this->_pointer[1] = 0;
     }
 
-    basic_string &operator=(type const *pointer) {
+    basic_string &operator=(const type *pointer) {
         _length = string_length(pointer);
 
         if (this->_allocated < _length + 1)
@@ -54,7 +54,7 @@ public:
         return this->_pointer[_length] = 0, *this;
     }
 
-    basic_string &operator=(basic_string const &object) {
+    basic_string &operator=(const basic_string &object) {
         _length = object.length();
 
         if (this->_allocated < _length + 1)
@@ -69,7 +69,7 @@ public:
         return object.clear(), *this;
     }
 
-    basic_string &operator+=(type const object) {
+    basic_string &operator+=(const type object) {
         if (this->_allocated < _length + 2) {
             this->reallocate(_length + 2);
         }
@@ -78,7 +78,7 @@ public:
         return this->_pointer[++_length] = 0, *this;
     }
 
-    basic_string &operator+=(type const *pointer) {
+    basic_string &operator+=(const type *pointer) {
         u64 length = string_length(pointer);
         u64 new_length = _length + length;
 
@@ -90,7 +90,7 @@ public:
         return this->_pointer[_length = new_length] = 0, *this;
     }
 
-    basic_string &operator+=(basic_string const &object) {
+    basic_string &operator+=(const basic_string &object) {
         u64 length = object.length();
         u64 new_length = _length + length;
 
@@ -102,40 +102,40 @@ public:
         return this->_pointer[_length = new_length] = 0, *this;
     }
 
-    _OSL_NODISCARD basic_string &operator+(type const object) {
+    _OSL_NODISCARD basic_string &operator+(const type object) {
         return this->operator+=(object), *this;
     }
 
-    _OSL_NODISCARD basic_string &operator+(type const *pointer) {
+    _OSL_NODISCARD basic_string &operator+(const type *pointer) {
         return this->operator+=(pointer), *this;
     }
 
-    _OSL_NODISCARD basic_string &operator+(basic_string const &object) {
+    _OSL_NODISCARD basic_string &operator+(const basic_string &object) {
         return this->operator+=(object), *this;
     }
 
-    _OSL_NODISCARD bool operator==(type const object) {
+    _OSL_NODISCARD bool operator==(const type object) {
         if (_length > 1 || _length == 0) return false;
             return *this->_pointer == object;
     }
 
-    _OSL_NODISCARD bool operator==(type const *pointer) {
+    _OSL_NODISCARD bool operator==(const type *pointer) {
         return string_compare(this->_pointer, (char*)pointer);
     }
 
-    _OSL_NODISCARD bool operator==(basic_string const &object) {
+    _OSL_NODISCARD bool operator==(const basic_string &object) {
         return string_compare(this->_pointer, (char*)object.c_str());
     }
 
-    _OSL_NODISCARD bool operator!=(type const object) {
+    _OSL_NODISCARD bool operator!=(const type object) {
         return !(*this == object);
     }
 
-    _OSL_NODISCARD bool operator!=(type const *pointer) {
+    _OSL_NODISCARD bool operator!=(const type *pointer) {
         return !(*this == pointer);
     }
 
-    _OSL_NODISCARD bool operator!=(basic_string const &object) {
+    _OSL_NODISCARD bool operator!=(const basic_string &object) {
         return !(*this == object);
     }
 
@@ -144,7 +144,7 @@ public:
         this->free();
     }
 
-    _OSL_NODISCARD type const *c_str() const _OSL_NOEXCEPT {
+    _OSL_NODISCARD const type *c_str() const _OSL_NOEXCEPT {
         return this->_pointer;
     }
 

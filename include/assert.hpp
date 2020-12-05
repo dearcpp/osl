@@ -1,8 +1,7 @@
 #ifndef _OSL_ASSERT_HPP
 #define _OSL_ASSERT_HPP
 
-#include <defines.hpp>
-#include <inttypes.hpp>
+# include <int_types.hpp>
 
 OSL_BEGIN_NAMESPACE
 

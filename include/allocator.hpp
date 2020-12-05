@@ -1,9 +1,8 @@
 #ifndef _OSL_ALLOCATOR_HPP
 #define _OSL_ALLOCATOR_HPP
 
-#include <memory.hpp>
-#include <defines.hpp>
-#include <assert.hpp>
+# include <memory.hpp>
+# include <assert.hpp>
 
 OSL_BEGIN_NAMESPACE
 
@@ -31,7 +30,7 @@ public:
     void allocate(u64 size) {
         if (_allocated == 0) {
             _pointer = new _type[_allocated = size];
-        } else assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use realloc method");
+        } else assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use 'realloc' method");
     }
 
     void reallocate(u64 size) {
