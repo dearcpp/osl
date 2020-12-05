@@ -1,7 +1,7 @@
 #ifndef _OSL_MATH_HPP
 #define _OSL_MATH_HPP
 
-#include <defines.hpp>
+# include <defines.hpp>
 
 OSL_BEGIN_NAMESPACE
 

@@ -1,8 +1,7 @@
 #ifndef _OSL_ARRAY_HPP
 #define _OSL_ARRAY_HPP
 
-#include <inttypes.hpp>
-#include <defines.hpp>
+# include <int_types.hpp>
 
 OSL_BEGIN_NAMESPACE
 

@@ -1,9 +1,8 @@
 #ifndef _OSL_QUEUE_HPP
 #define _OSL_QUEUE_HPP
 
-#include <inttypes.hpp>
-#include <defines.hpp>
-#include <assert.hpp>
+# include <int_types.hpp>
+# include <assert.hpp>
 
 OSL_BEGIN_NAMESPACE
 
@@ -30,7 +29,7 @@ public:
         clear();
     }
 
-    void push(type const &value) {
+    void push(const type &value) {
         node *next = new node(value);
         next->next = _head;
         _head = next, _size++;
@@ -38,7 +37,7 @@ public:
 
     void pop() {
         if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use the 'realloc' method");
+            assert_failed(__FILE__, __LINE__, "failed to pop element from queue");
 
         node *buffer = _head->next;
         delete _head;
