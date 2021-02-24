@@ -6,8 +6,8 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
-class basic_string : public allocator<_type>
+template <class _type, class _allocator = allocator<_type>>
+class basic_string : public _allocator
 {
 public:
 
@@ -79,8 +79,8 @@ public:
     }
 
     basic_string &operator+=(const type *pointer) {
-        u64 length = string_length(pointer);
-        u64 new_length = _length + length;
+        u32 length = string_length(pointer);
+        u32 new_length = _length + length;
 
         if (this->_allocated < new_length + 1) {
             this->reallocate(new_length + 1);
@@ -91,8 +91,8 @@ public:
     }
 
     basic_string &operator+=(const basic_string &object) {
-        u64 length = object.length();
-        u64 new_length = _length + length;
+        u32 length = object.length();
+        u32 new_length = _length + length;
 
         if (this->_allocated < new_length + 1) {
             this->reallocate(new_length + 1);
@@ -148,13 +148,13 @@ public:
         return this->_pointer;
     }
 
-    _OSL_NODISCARD u64 length() const _OSL_NOEXCEPT {
+    _OSL_NODISCARD u32 length() const _OSL_NOEXCEPT {
         return _length;
     }
 
 protected:
 
-    u64 _length;
+    u32 _length;
 
 };
 

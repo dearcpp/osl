@@ -73,6 +73,13 @@ public:
 
     _OSL_CONSTEXPR list() _OSL_NOEXCEPT : _front(0), _back(0), _size(0) { }
 
+    // @todo: copy and move ctors
+    // @todo: free all nodes
+
+    virtual ~list() {
+
+    }
+
     const_iterator start() const _OSL_NOEXCEPT {
         return const_iterator(_front);
     }

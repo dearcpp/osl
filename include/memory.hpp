@@ -6,13 +6,13 @@
 OSL_BEGIN_NAMESPACE
 
 template <class _type>
-void memory_copy(_type *destination, const _type *source, u64 length) {
+void memory_copy(_type *destination, const _type *source, u32 length) {
     while (length--)
         *destination++ = *source++;
 }
 
 template <class _type>
-void memory_set(_type *destination, _type value, u64 length) {
+void memory_set(_type *destination, _type value, u32 length) {
     while (length--)
         *destination++ = value;
 }
