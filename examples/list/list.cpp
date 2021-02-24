@@ -1,9 +1,9 @@
 #include <list.hpp>
 #include <cstdio>
 
-int main() {
-
+int main(int, char**) {
     osl::list<int> buffer;
+
     buffer.push_back(1);
     buffer.push_back(2);
     buffer.push_back(3);

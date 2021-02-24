@@ -2,7 +2,7 @@
 
 #include <string.hpp>
 
-int main() {
+int main(int, char**) {
     osl::basic_string<char> str = "Hello World";
     if (str != "nothing") {
         std::cout << "Allocated: " << str.allocated() << ", Length: " << str.length() << ", String: " << str.data() << std::endl;
