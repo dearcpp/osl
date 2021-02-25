@@ -28,21 +28,23 @@ public:
     }
 
     void allocate(u32 size) {
-        if (_allocated == 0) {
-            _pointer = new _type[_allocated = size];
-        } else assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use 'realloc' method");
+        if (_allocated != 0)
+            assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use 'realloc' method");
+
+        _pointer = new _type[_allocated = size];
     }
 
     virtual void reallocate(u32 size) {
-        if (size >= _allocated) {
-            type *old_ptr = _pointer;
-            _pointer = new type[size];
-            if (old_ptr) {
-                memory_copy(_pointer, old_ptr, _allocated);
-                delete[] old_ptr;
-            }
-            _allocated = size;
-        } else assert_failed(__FILE__, __LINE__, "impossible to re-allocate buffer for less memory count");
+        if (size < _allocated)
+            assert_failed(__FILE__, __LINE__, "impossible to re-allocate buffer for less memory count");
+
+        type *old_ptr = _pointer;
+        _pointer = new type[size];
+        if (old_ptr) {
+            memory_copy(_pointer, old_ptr, _allocated);
+            delete[] old_ptr;
+        }
+        _allocated = size;
     }
 
     _OSL_NODISCARD const type *data() const _OSL_NOEXCEPT {

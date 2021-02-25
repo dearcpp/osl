@@ -4,8 +4,6 @@
 
 int main(int, char**) {
     osl::basic_string<char> str = "Hello World";
-    if (str != "nothing") {
-        std::cout << "Allocated: " << str.allocated() << ", Length: " << str.length() << ", String: " << str.data() << std::endl;
-    }
+    std::cout << "Allocated: " << str.allocated() << ", Length: " << str.length() << ", String: " << str.data() << std::endl;
     return 0;
 }
