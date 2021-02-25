@@ -2,10 +2,13 @@
 
 #include <array.hpp>
 
+using namespace osl;
+
 int main(int, char**) {
-    osl::array<int, 5> arr;
-    for (osl::u32 i = 0; i < arr.size(); i++) {
-        printf("%i\n", arr[i] = i);
-    }
+    array<int, 5> array;
+
+    for (u32 i = 0; i < array.size(); ++i)
+        printf("%i\n", array[i] = i);
+
     return 0;
 }

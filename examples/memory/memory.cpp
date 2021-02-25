@@ -2,8 +2,10 @@
 
 #include <memory.hpp>
 
+using namespace osl;
+
 int main(int, char**) {
-    osl::safe_ptr<int> obj(5);
+    safe_ptr<int> obj(5);
     printf("%i\n", **obj);
     return 0;
 }

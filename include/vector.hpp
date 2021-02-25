@@ -39,10 +39,17 @@ public:
 
     using type = _type;
 
-    vector(std::initializer_list<_type> list) : _allocator(list.size()), _length(list.size()) {
+    _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _allocator(), _length(0) { }
+
+    vector(std::initializer_list<_type> list) _OSL_NOEXCEPT : _allocator(list.size()), _length(list.size()) {
         for (u32 i = 0; i < _length; ++i) {
             this->operator[](i) = list.begin()[i];
         }
+    }
+
+    vector(const vector &vector) _OSL_NOEXCEPT : _allocator(), _length(0) {
+        for (auto it = 0; it < vector._length(); ++it)
+            push_back(vector[it]);
     }
 
     virtual ~vector() { }

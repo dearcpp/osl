@@ -4,6 +4,8 @@
 # include <int_types.hpp>
 # include <assert.hpp>
 
+# include <initializer_list>
+
 OSL_BEGIN_NAMESPACE
 
 template <class _type>
@@ -24,6 +26,11 @@ public:
     using type = _type;
 
     _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0), _size(0) { }
+
+    queue(std::initializer_list<_type> queue) _OSL_NOEXCEPT : _head(0), _size(0) {
+        for (u32 i = 0; i < queue.size(); ++i)
+            push(queue.begin()[i]);
+    }
 
     queue(const queue &queue) _OSL_NOEXCEPT : _head(0), _size(0) {
         for (auto it = queue._head; it != 0; it = it->next) {
