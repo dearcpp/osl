@@ -8,12 +8,13 @@ int main(int, char**) {
     buffer.push_back(2);
     buffer.push_back(3);
 
-    const osl::list<int> list = buffer;
-    for (auto it = list.start(); it != ++list.end(); ++it) {
+    for (auto it = buffer.start(); it != ++buffer.end(); ++it) {
         printf("%i\n", *it);
     }
 
-    for (auto it = list.end(); it != --list.start(); --it) {
+    osl::list<int> buffer1 = buffer;
+
+    for (auto it = buffer1.start(); it != ++buffer1.end(); ++it) {
         printf("%i\n", *it);
     }
 

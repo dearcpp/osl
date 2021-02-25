@@ -73,11 +73,14 @@ public:
 
     _OSL_CONSTEXPR list() _OSL_NOEXCEPT : _front(0), _back(0), _size(0) { }
 
-    // @todo: copy and move ctors
-    // @todo: free all nodes
+    list(const list &list) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
+        for (auto it = list._front; it != 0; it = it->next) {
+            this->push_back(it->value);
+        }
+    }
 
     virtual ~list() {
-
+        clear();
     }
 
     const_iterator start() const _OSL_NOEXCEPT {
@@ -152,6 +155,16 @@ public:
         node *buffer = _back;
         _back = _back->prev;
         delete buffer;
+    }
+
+    void clear() {
+        auto it = _front;
+        while (it != 0) {
+            node *buffer = it->next;
+            delete it;
+            it = buffer;
+        }
+        _front = 0, _back = 0, _size = 0;
     }
 
 protected:

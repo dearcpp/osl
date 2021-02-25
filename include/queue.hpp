@@ -23,7 +23,13 @@ public:
 
     using type = _type;
 
-    _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0) { }
+    _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0), _size(0) { }
+
+    queue(const queue &queue) _OSL_NOEXCEPT : _head(0), _size(0) {
+        for (auto it = queue._head; it != 0; it = it->next) {
+            this->push(it->value);
+        }
+    }
 
     virtual ~queue() {
         clear();
@@ -57,8 +63,13 @@ public:
     }
 
     void clear() {
-        while (_head)
-            pop();
+        auto it = _head;
+        while (it != 0) {
+            node *buffer = it->next;
+            delete it;
+            it = buffer;
+        }
+        _head = 0, _size = 0;
     }
 
 protected:
