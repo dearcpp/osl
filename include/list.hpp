@@ -2,6 +2,7 @@
 #define _OSL_LIST_HPP
 
 # include <int_types.hpp>
+# include <initializer_list>
 # include <assert.hpp>
 
 OSL_BEGIN_NAMESPACE
@@ -73,10 +74,14 @@ public:
 
     _OSL_CONSTEXPR list() _OSL_NOEXCEPT : _front(0), _back(0), _size(0) { }
 
+    list(std::initializer_list<_type> list) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
+        for (u32 i = 0; i < list.size(); ++i)
+            push(list.begin()[i]);
+    }
+
     list(const list &list) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
-        for (auto it = list._front; it != 0; it = it->next) {
+        for (auto it = list._front; it != 0; it = it->next)
             this->push_back(it->value);
-        }
     }
 
     virtual ~list() {
