@@ -5,42 +5,42 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
-void memory_copy(_type *destination, const _type *source, u32 length) {
+template <class _Type>
+void memory_copy(_Type *destination, const _Type *source, u32 length) {
     while (length--)
         *destination++ = *source++;
 }
 
-template <class _type>
-void memory_set(_type *destination, _type value, u32 length) {
+template <class _Type>
+void memory_set(_Type *destination, _Type value, u32 length) {
     while (length--)
         *destination++ = value;
 }
 
-template <class _type>
-u64 string_length(_type *source) {
+template <class _Type>
+u64 string_length(_Type *source) {
     u64 result = 0;
     while (*source++) result++;
     return result;
 }
 
-template <class _type>
-bool string_compare(_type *first, _type *second) {
+template <class _Type>
+bool string_compare(_Type *first, _Type *second) {
     do {
         if (*first == 0 && *second == 0) return true;
     } while (*first++ == *second++);
     return false;
 }
 
-template <class _type>
+template <class _Type>
 class safe_ptr
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
-    template <class... _types>
-    safe_ptr(_types&&... args) {
+    template <class... _Types>
+    safe_ptr(_Types&&... args) {
         _pointer = new type(args...);
     }
 

@@ -5,12 +5,12 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type, u64 _size>
+template <class _Type, u64 _size>
 class array
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
     type operator[](u64 index) const {
         return _storage[index];

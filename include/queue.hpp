@@ -8,26 +8,26 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
+template <class _Type>
 class queue
 {
 protected:
 
     struct node
     {
-        _type value;
+        _Type value;
         node *next;
 
-        node(_type value) : value(value) { }
+        node(_Type value) : value(value) { }
     };
 
 public:
 
-    using type = _type;
+    using type = _Type;
 
     _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0), _size(0) { }
 
-    queue(std::initializer_list<_type> queue) _OSL_NOEXCEPT : _head(0), _size(0) {
+    queue(std::initializer_list<_Type> queue) _OSL_NOEXCEPT : _head(0), _size(0) {
         for (u32 i = 0; i < queue.size(); ++i)
             push(queue.begin()[i]);
     }
@@ -57,7 +57,7 @@ public:
         _head = buffer, _size--;
     }
 
-    _type top() const {
+    _Type top() const {
         return _head->value;
     }
 

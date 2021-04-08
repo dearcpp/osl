@@ -5,9 +5,9 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
-void swap(_type &first, _type &second) {
-    _type temporary = first;
+template <class _Type>
+void swap(_Type &first, _Type &second) {
+    _Type temporary = first;
     first = second;
     second = temporary;
 }

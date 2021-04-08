@@ -6,12 +6,12 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type, class _allocator = allocator<_type>>
+template <class _Type, class _allocator = allocator<_Type>>
 class basic_string : public _allocator
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
     basic_string() _OSL_NOEXCEPT { }
 

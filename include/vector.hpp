@@ -9,14 +9,14 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
-class vector_allocator : public allocator<_type>
+template <class _Type>
+class vector_allocator : public allocator<_Type>
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
-    using allocator<_type>::allocator;
+    using allocator<_Type>::allocator;
 
     virtual ~vector_allocator() { }
 
@@ -32,16 +32,17 @@ public:
 
 };
 
-template <class _type, class _allocator = vector_allocator<_type>>
+template <class _Type, class _allocator = vector_allocator<_Type>>
 class vector : public _allocator
 {
 public:
 
-    using type = _type;
+    using type = _Type;
+    using initializer_list = std::initializer_list<_Type>;
 
     _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _allocator(), _length(0) { }
 
-    vector(std::initializer_list<_type> list) _OSL_NOEXCEPT : _allocator(list.size()), _length(list.size()) {
+    vector(initializer_list list) _OSL_NOEXCEPT : _allocator(list.size()), _length(list.size()) {
         for (u32 i = 0; i < _length; ++i) {
             this->operator[](i) = list.begin()[i];
         }
