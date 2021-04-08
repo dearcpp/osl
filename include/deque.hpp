@@ -1,5 +1,5 @@
-#ifndef _OSL_deque_HPP
-#define _OSL_deque_HPP
+#ifndef _OSL_DEQUE_HPP
+#define _OSL_DEQUE_HPP
 
 # include <int_types.hpp>
 # include <initializer_list>
