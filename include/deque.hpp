@@ -1,5 +1,5 @@
-#ifndef _OSL_LIST_HPP
-#define _OSL_LIST_HPP
+#ifndef _OSL_deque_HPP
+#define _OSL_deque_HPP
 
 # include <int_types.hpp>
 # include <initializer_list>
@@ -7,12 +7,12 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
-class list
+template <class _Type>
+class deque
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
 protected:
 
@@ -44,11 +44,11 @@ public:
             return _node != object._node;
         }
 
-        const_iterator operator--() _OSL_NOEXCEPT {
+        const_iterator operator--() const _OSL_NOEXCEPT {
             return _node = _node->prev, *this;
         }
 
-        const_iterator operator++() _OSL_NOEXCEPT {
+        const_iterator operator++() const _OSL_NOEXCEPT {
             return _node = _node->next, *this;
         }
 
@@ -68,23 +68,33 @@ public:
             return this->_node->value;
         }
 
+        iterator operator--() _OSL_NOEXCEPT {
+            return this->_node = this->_node->prev, *this;
+        }
+
+        iterator operator++() _OSL_NOEXCEPT {
+            return this->_node = this->_node->next, *this;
+        }
+
     };
 
 public:
 
-    _OSL_CONSTEXPR list() _OSL_NOEXCEPT : _front(0), _back(0), _size(0) { }
+    using initializer_list = std::initializer_list<_Type>;
 
-    list(std::initializer_list<_type> list) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
-        for (u32 i = 0; i < list.size(); ++i)
-            push(list.begin()[i]);
+    _OSL_CONSTEXPR deque() _OSL_NOEXCEPT : _front(0), _back(0), _size(0) { }
+
+    deque(initializer_list deque) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
+        for (u32 i = 0; i < deque.size(); ++i)
+            push(deque.begin()[i]);
     }
 
-    list(const list &list) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
-        for (auto it = list._front; it != 0; it = it->next)
+    deque(const deque &deque) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
+        for (auto it = deque._front; it != 0; it = it->next)
             this->push_back(it->value);
     }
 
-    virtual ~list() {
+    virtual ~deque() {
         clear();
     }
 
@@ -117,7 +127,7 @@ public:
 
     void pop_front() {
         if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "failed to pop element from list");
+            assert_failed(__FILE__, __LINE__, "failed to pop element from deque");
 
         _front->next->prev = 0;
         node *buffer = _front;
@@ -130,7 +140,7 @@ public:
     }
 
     iterator end() _OSL_NOEXCEPT {
-        return iterator(_back);
+        return ++iterator(_back);
     }
 
     type back() const _OSL_NOEXCEPT {
@@ -154,12 +164,25 @@ public:
 
     void pop_back() {
         if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "failed to pop element from list");
+            assert_failed(__FILE__, __LINE__, "failed to pop element from deque");
 
         _back->prev->next = 0;
         node *buffer = _back;
         _back = _back->prev;
         delete buffer;
+    }
+
+    _OSL_NODISCARD type &operator[](u32 index) {
+        if (index > _size - 1 || index < 0)
+            assert_failed(__FILE__, __LINE__, "out of bounds element getting");
+
+        auto it = start();
+        for (; index; --index) ++it;
+        return *it;
+    }
+
+    _OSL_NODISCARD type operator[](u32 index) const {
+        return this->operator[](index);
     }
 
     void clear() {

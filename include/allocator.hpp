@@ -6,12 +6,12 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _type>
+template <class _Type>
 class allocator
 {
 public:
 
-    using type = _type;
+    using type = _Type;
 
     _OSL_CONSTEXPR allocator() _OSL_NOEXCEPT : _pointer(0), _allocated(0) { }
 
@@ -31,7 +31,7 @@ public:
         if (_allocated != 0)
             assert_failed(__FILE__, __LINE__, "impossible to re-allocate memory, use 'realloc' method");
 
-        _pointer = new _type[_allocated = size];
+        _pointer = new _Type[_allocated = size];
     }
 
     virtual void reallocate(u32 size) {
@@ -55,12 +55,15 @@ public:
         return _pointer;
     }
 
-    _OSL_NODISCARD type operator[](u32 index) const {
+    _OSL_NODISCARD type &operator[](u32 index) {
+        if (index > _allocated - 1 || index < 0)
+            assert_failed(__FILE__, __LINE__, "out of bounds element getting");
+
         return _pointer[index];
     }
 
-    _OSL_NODISCARD type &operator[](u32 index) {
-        return _pointer[index];
+    _OSL_NODISCARD type operator[](u32 index) const {
+        return this->operator[](index);
     }
 
     void free() {
