@@ -36,11 +36,11 @@ public:
             return _node->value;
         }
 
-        bool operator==(const const_iterator &object) _OSL_NOEXCEPT {
+        bool operator==(const const_iterator &object) const _OSL_NOEXCEPT {
             return _node == object._node;
         }
 
-        bool operator!=(const const_iterator &object) _OSL_NOEXCEPT {
+        bool operator!=(const const_iterator &object) const _OSL_NOEXCEPT {
             return _node != object._node;
         }
 
