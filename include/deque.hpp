@@ -86,7 +86,7 @@ public:
 
     deque(initializer_list deque) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
         for (u32 i = 0; i < deque.size(); ++i)
-            push(deque.begin()[i]);
+            this->push_back(deque.begin()[i]);
     }
 
     deque(const deque &deque) _OSL_NOEXCEPT : _front(0), _back(0), _size(0) {
@@ -169,6 +169,7 @@ public:
         _back->prev->next = 0;
         node *buffer = _back;
         _back = _back->prev;
+
         delete buffer;
     }
 
@@ -178,6 +179,7 @@ public:
 
         auto it = start();
         for (; index; --index) ++it;
+
         return *it;
     }
 
