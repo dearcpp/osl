@@ -19,20 +19,17 @@ public:
         clear();
     }
 
-    basic_string(const type object) : _length(1) {
-        this->allocate(2);
+    basic_string(const type object) : _length(1), _Allocator(2) {
         this->_pointer[0] = object;
         this->_pointer[1] = 0;
     }
 
-    basic_string(const type *pointer) : _length(string_length(pointer)) {
-        this->allocate(_length + 1);
+    basic_string(const type *pointer) : _length(string_length(pointer)), _Allocator(_length + 1) {
         memory_copy<type>(this->_pointer, pointer, _length);
         this->_pointer[_length] = 0;
     }
 
-    basic_string(const basic_string &object) : _length(object.length()) {
-        this->allocate(_length + 1);
+    basic_string(const basic_string &object) : _length(object.length()), _Allocator(_length + 1) {
         memory_copy<type>(this->_pointer, object.c_str(), _length);
         this->_pointer[_length] = 0;
     }
