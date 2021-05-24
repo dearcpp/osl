@@ -6,8 +6,8 @@
 
 OSL_BEGIN_NAMESPACE
 
-template <class _Type, class _allocator = allocator<_Type>>
-class basic_string : public _allocator
+template <class _Type, class _Allocator = allocator<_Type>>
+class basic_string : public _Allocator
 {
 public:
 
@@ -70,9 +70,8 @@ public:
     }
 
     basic_string &operator+=(const type object) {
-        if (this->_allocated < _length + 2) {
+        if (this->_allocated < _length + 2)
             this->reallocate(_length + 2);
-        }
 
         memory_set<type>(this->_pointer + _length, object, 1);
         return this->_pointer[++_length] = 0, *this;
@@ -82,9 +81,8 @@ public:
         u32 length = string_length(pointer);
         u32 new_length = _length + length;
 
-        if (this->_allocated < new_length + 1) {
+        if (this->_allocated < new_length + 1)
             this->reallocate(new_length + 1);
-        }
 
         memory_copy<type>(this->_pointer + _length, pointer, length);
         return this->_pointer[_length = new_length] = 0, *this;
@@ -94,9 +92,8 @@ public:
         u32 length = object.length();
         u32 new_length = _length + length;
 
-        if (this->_allocated < new_length + 1) {
+        if (this->_allocated < new_length + 1)
             this->reallocate(new_length + 1);
-        }
 
         memory_copy<type>(this->_pointer + _length, object.c_str(), length);
         return this->_pointer[_length = new_length] = 0, *this;
@@ -120,11 +117,11 @@ public:
     }
 
     _OSL_NODISCARD bool operator==(const type *pointer) {
-        return string_compare(this->_pointer, (char*)pointer);
+        return string_compare(this->_pointer, const_cast<char*>(pointer));
     }
 
     _OSL_NODISCARD bool operator==(const basic_string &object) {
-        return string_compare(this->_pointer, (char*)object.c_str());
+        return string_compare(this->_pointer, const_cast<char*>(object.c_str()));
     }
 
     _OSL_NODISCARD bool operator!=(const type object) {
