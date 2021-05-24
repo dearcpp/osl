@@ -32,23 +32,23 @@ public:
 
 };
 
-template <class _Type, class _allocator = vector_allocator<_Type>>
-class vector : public _allocator
+template <class _Type, class _Allocator = vector_allocator<_Type>>
+class vector : public _Allocator
 {
 public:
 
     using type = _Type;
     using initializer_list = std::initializer_list<_Type>;
 
-    _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _allocator(), _length(0) { }
+    _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _Allocator(), _length(0) { }
 
-    vector(initializer_list list) _OSL_NOEXCEPT : _allocator(list.size()), _length(list.size()) {
+    vector(initializer_list list) _OSL_NOEXCEPT : _Allocator(list.size()), _length(list.size()) {
         for (u32 i = 0; i < _length; ++i) {
             this->operator[](i) = list.begin()[i];
         }
     }
 
-    vector(const vector &vector) _OSL_NOEXCEPT : _allocator(), _length(0) {
+    vector(const vector &vector) _OSL_NOEXCEPT : _Allocator(), _length(0) {
         for (auto it = 0; it < vector._length(); ++it)
             push_back(vector[it]);
     }

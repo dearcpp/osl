@@ -29,13 +29,12 @@ public:
 
     queue(std::initializer_list<_Type> queue) _OSL_NOEXCEPT : _head(0), _size(0) {
         for (u32 i = 0; i < queue.size(); ++i)
-            push(queue.begin()[i]);
+            this->push(queue.begin()[i]);
     }
 
     queue(const queue &queue) _OSL_NOEXCEPT : _head(0), _size(0) {
-        for (auto it = queue._head; it != 0; it = it->next) {
+        for (auto it = queue._head; it != 0; it = it->next)
             this->push(it->value);
-        }
     }
 
     virtual ~queue() {
