@@ -43,9 +43,8 @@ public:
     _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _Allocator(), _length(0) { }
 
     vector(initializer_list list) _OSL_NOEXCEPT : _Allocator(list.size()), _length(list.size()) {
-        for (u32 i = 0; i < _length; ++i) {
+        for (u32 i = 0; i < _length; ++i)
             this->operator[](i) = list.begin()[i];
-        }
     }
 
     vector(const vector &vector) _OSL_NOEXCEPT : _Allocator(), _length(0) {

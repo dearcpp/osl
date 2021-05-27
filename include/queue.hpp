@@ -28,8 +28,9 @@ public:
     _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _back(0), _front(0), _size(0) { }
 
     queue(std::initializer_list<_Type> queue) _OSL_NOEXCEPT : _back(0), _front(0), _size(0) {
-        for (u32 i = queue.size() - 1; i >= 0; ++i)
+        for (u32 i = queue.size() - 1; i != 0; --i)
             this->push(queue.begin()[i]);
+        this->push(queue.begin()[0]);
     }
 
     queue(const queue &queue) _OSL_NOEXCEPT : _back(0), _front(0), _size(0) {
