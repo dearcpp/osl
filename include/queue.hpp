@@ -16,24 +16,24 @@ protected:
     struct node
     {
         _Type value;
-        node *next;
+        node *prev, *next;
 
-        node(_Type value) : value(value) { }
+        node(_Type value, node *next) : value(value), prev(0), next(next) { }
     };
 
 public:
 
     using type = _Type;
 
-    _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _head(0), _size(0) { }
+    _OSL_CONSTEXPR queue() _OSL_NOEXCEPT : _back(0), _front(0), _size(0) { }
 
-    queue(std::initializer_list<_Type> queue) _OSL_NOEXCEPT : _head(0), _size(0) {
-        for (u32 i = 0; i < queue.size(); ++i)
+    queue(std::initializer_list<_Type> queue) _OSL_NOEXCEPT : _back(0), _front(0), _size(0) {
+        for (u32 i = queue.size() - 1; i >= 0; ++i)
             this->push(queue.begin()[i]);
     }
 
-    queue(const queue &queue) _OSL_NOEXCEPT : _head(0), _size(0) {
-        for (auto it = queue._head; it != 0; it = it->next)
+    queue(const queue &queue) _OSL_NOEXCEPT : _back(0), _front(0), _size(0) {
+        for (auto it = queue._back; it != 0; it = it->next)
             this->push(it->value);
     }
 
@@ -42,26 +42,32 @@ public:
     }
 
     void push(const type &value) {
-        node *next = new node(value);
-        next->next = _head;
-        _head = next, _size++;
+        node *new_back = new node(value, _back);
+
+        if (_size == 0) _front = new_back;
+        else _back->prev = new_back;
+
+        _size++, _back = new_back;
     }
 
     void pop() {
-        if (_size == 0)
-            assert_failed(__FILE__, __LINE__, "failed to pop element from queue");
-
-        node *buffer = _head->next;
-        delete _head;
-        _head = buffer, _size--;
+        node *old_last = _front;
+        _front = _front->prev;
+        _Type value = old_last->value;
+        delete old_last;
+        _size--;
     }
 
-    _Type top() const {
-        return _head->value;
+    _Type back() const {
+        return _back->value;
+    }
+
+    _Type front() const {
+        return _front->value;
     }
 
     bool empty() const {
-        return _head == 0;
+        return _back == 0;
     }
 
     u64 size() const {
@@ -69,18 +75,18 @@ public:
     }
 
     void clear() {
-        auto it = _head;
+        auto it = _front;
         while (it != 0) {
-            node *buffer = it->next;
+            node *buffer = it->prev;
             delete it;
             it = buffer;
         }
-        _head = 0, _size = 0;
+        _back = 0, _size = 0;
     }
 
 protected:
 
-    node *_head;
+    node *_back, *_front;
     u64 _size;
 
 };
