@@ -33,7 +33,7 @@ TEST(Queue, pop)
     }
 }
 
-TEST(Queue, ctor_queue)
+TEST(Queue, ctor_list)
 {
     int_queue queue = INITIALIZER_LIST;
 

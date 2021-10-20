@@ -69,15 +69,6 @@ public:
         return _ptr;
     }
 
-    _OSL_NODISCARD const type operator[](size_type index) const
-    {
-        if (index > _size - 1 || index < 0)
-        {
-            assert_failed(__FILE__, __LINE__, "out of bounds element getting");
-        }
-        return this->operator[](index);
-    }
-
     _OSL_NODISCARD type &operator[](size_type index)
     {
         if (index > _size - 1 || index < 0)
@@ -85,6 +76,15 @@ public:
             assert_failed(__FILE__, __LINE__, "out of bounds element getting");
         }
         return _ptr[index];
+    }
+
+    _OSL_NODISCARD const type operator[](size_type index) const
+    {
+        if (index > _size - 1 || index < 0)
+        {
+            assert_failed(__FILE__, __LINE__, "out of bounds element getting");
+        }
+        return this->operator[](index);
     }
 
     void free()
