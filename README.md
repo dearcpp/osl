@@ -1,7 +1,7 @@
 # osl
-[![Build Status](https://travis-ci.org/beryll1um/OSL.svg?branch=master)](https://travis-ci.org/beryll1um/OSL.svg?branch=master)
+[![Build Status](https://app.travis-ci.com/beryll1um/osl.svg?branch=stable)](https://app.travis-ci.com/beryll1um/osl.svg?branch=stable)
 
-Own implementation of Standard Template Library C++
+Own implementation of Standard Template Library C++.
 
 ## Build
 Use the cmake script to build examples and using the library.
