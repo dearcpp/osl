@@ -1,5 +1,5 @@
-#ifndef _OSL_DEFINES_HPP
-#define _OSL_DEFINES_HPP
+#ifndef _OSL_DEFINES_HPP_
+#define _OSL_DEFINES_HPP_
 
 # define OSL_NAMESPACE osl
 # define OSL_BEGIN_NAMESPACE namespace OSL_NAMESPACE {
