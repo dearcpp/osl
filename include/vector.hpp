@@ -1,5 +1,5 @@
-#ifndef _OSL_VECTOR_HPP
-#define _OSL_VECTOR_HPP
+#ifndef _OSL_VECTOR_HPP_
+#define _OSL_VECTOR_HPP_
 
 # include <defines.hpp>
 # include <allocator.hpp>
@@ -15,19 +15,21 @@ class vector_allocator : public allocator<_Type>
 public:
 
     using type = _Type;
-
     using allocator<_Type>::allocator;
+    using size_type = typename allocator<_Type>::size_type;
 
     virtual ~vector_allocator() { }
 
-    virtual void sized_reallocate(u32 size, u32 destination_offset = 0, u32 source_offset = 0, u32 length = 0) {
-        type *old_ptr = this->_pointer;
-        this->_pointer = new type[size];
-        if (old_ptr) {
-            memory_copy(this->_pointer + destination_offset, old_ptr + source_offset, length);
+    virtual void sized_reallocate(size_type size, size_type destination_offset = 0, size_type source_offset = 0, size_type length = 0)
+    {
+        type *old_ptr = this->_ptr;
+        this->_ptr = new type[size];
+        if (old_ptr)
+        {
+            memory_copy(this->_ptr + destination_offset, old_ptr + source_offset, length);
             delete[] old_ptr;
         }
-        this->_allocated = size;
+        this->_size = size;
     }
 
 };
@@ -38,53 +40,78 @@ class vector : public _Allocator
 public:
 
     using type = _Type;
+    using size_type = typename _Allocator::size_type;
     using initializer_list = std::initializer_list<_Type>;
 
-    _OSL_CONSTEXPR vector() _OSL_NOEXCEPT : _Allocator(), _length(0) { }
+    vector() _OSL_NOEXCEPT : _Allocator(), _len(0) { }
 
-    vector(initializer_list list) _OSL_NOEXCEPT : _Allocator(list.size()), _length(list.size()) {
-        for (u32 i = 0; i < _length; ++i)
+    vector(initializer_list list) : _Allocator(list.size()), _len(list.size())
+    {
+        for (size_type i = 0; i < _len; ++i)
+        {
             this->operator[](i) = list.begin()[i];
+        }
     }
 
-    vector(const vector &vector) _OSL_NOEXCEPT : _Allocator(), _length(0) {
-        for (auto it = 0; it < vector._length(); ++it)
+    vector(const vector &vector) : _Allocator(), _len(0)
+    {
+        for (size_type it = 0; it < vector.length(); ++it)
+        {
             push_back(vector[it]);
+        }
     }
 
     virtual ~vector() { }
 
-    void push_front(const type &value) {
-        if (this->allocated() < ++_length)
-            this->sized_reallocate(_length, 1, 0, this->_length - 1);
-
+    void push_front(const type &value)
+    {
+        if (this->allocated() < ++_len)
+        {
+            this->sized_reallocate(_len, 1, 0, this->_len - 1);
+        }
         this->operator[](0) = value;
     }
 
-    void push_back(const type &value) {
-        _length++;
+    void push_back(const type &value)
+    {
+        _len++;
 
-        if (this->allocated() < _length)
-            this->reallocate(_length);
+        if (this->allocated() < _len)
+        {
+            this->reallocate(_len);
+        }
 
-        this->operator[](_length - 1) = value;
+        this->operator[](_len - 1) = value;
     }
 
-    void pop_front() {
-        _length--, this->sized_reallocate(_length, 0, 1, _length);
+    void pop_front()
+    {
+        _len--, this->sized_reallocate(_len, 0, 1, _len);
     }
 
-    void pop_back() {
-        _length--, this->sized_reallocate(_length, 0, 0, _length);
+    void pop_back()
+    {
+        _len--, this->sized_reallocate(_len, 0, 0, _len);
     }
 
-    _OSL_NODISCARD u32 length() const _OSL_NOEXCEPT {
-        return _length;
+    _OSL_NODISCARD _OSL_FORCE_INLINE _Type back() const _OSL_NOEXCEPT
+    {
+        return this->_ptr[_len - 1];
+    }
+
+    _OSL_NODISCARD _OSL_FORCE_INLINE _Type front() const _OSL_NOEXCEPT
+    {
+        return this->_ptr[0];
+    }
+
+    _OSL_NODISCARD _OSL_FORCE_INLINE size_type length() const _OSL_NOEXCEPT
+    {
+        return _len;
     }
 
 protected:
 
-    u32 _length;
+    size_type _len;
 
 };
 
