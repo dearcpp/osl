@@ -5,6 +5,7 @@ set(TESTS_EXECUTABLE "${PROJECT_NAME}_tests")
 add_executable(${TESTS_EXECUTABLE}
     "${CMAKE_CURRENT_LIST_DIR}/allocator/allocator.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/array/array.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/deque/deque.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/math/math.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/memory/memory.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/queue/queue.cpp"
