@@ -1,5 +1,5 @@
-#ifndef _OSL_TYPES_HPP
-#define _OSL_TYPES_HPP
+#ifndef _OSL_TYPES_HPP_
+#define _OSL_TYPES_HPP_
 
 # include <defines.hpp>
 
